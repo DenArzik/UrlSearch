@@ -33,6 +33,8 @@
 
 #Directories
 .vs
+int
+bin
 
 #User files
 *.user
