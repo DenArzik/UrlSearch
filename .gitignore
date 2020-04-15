@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+#Directories
+.vs
+
+#User files
+*.user
