@@ -12,4 +12,16 @@ public:
 
 private:
 	Ui::ApplicationClass ui;
+
+	void init();
+
+	void initForm();
+
+	int getIdealThreadCount() const;
+	int getMaxThreadCount() const;
+
+private slots:
+	void go_pressed();
+
+
 };

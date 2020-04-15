@@ -68,7 +68,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox">
+         <widget class="QSpinBox" name="sb_max_threads">
           <property name="minimum">
            <number>1</number>
           </property>
@@ -134,7 +134,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="bt_go">
         <property name="text">
          <string>Go</string>
         </property>
