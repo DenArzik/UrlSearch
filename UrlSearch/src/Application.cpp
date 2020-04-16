@@ -3,6 +3,9 @@
 #include <QThreadPool>
 #include <QRegularExpressionValidator>
 
+#include <QUrl>
+#include <QDebug>
+
 Application::Application(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -37,5 +40,5 @@ int Application::getMaxThreadCount() const
 
 void Application::go_pressed()
 {
-
+	
 }
