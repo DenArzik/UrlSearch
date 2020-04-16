@@ -6,6 +6,8 @@
 #include <QUrl>
 #include <QDebug>
 
+#include "ScanProgress.h"
+
 Application::Application(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -40,5 +42,9 @@ int Application::getMaxThreadCount() const
 
 void Application::go_pressed()
 {
-	
+	this->setEnabled(false);
+
+	ScanProgress *scanProgress = new ScanProgress(nullptr);
+	scanProgress->show();
+	connect(scanProgress, &ScanProgress::destroyed, this, [this]() { this->setEnabled(true); });
 }

@@ -94,6 +94,7 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ScanProgress.cpp" />
     <ClCompile Include="src\UrlLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\Application.ui" />
+    <QtUic Include="src\ScanProgress.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Resources\Application.qrc" />
@@ -113,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\UrlLoader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\ScanProgress.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

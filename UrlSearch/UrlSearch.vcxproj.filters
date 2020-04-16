@@ -34,6 +34,9 @@
     <ClCompile Include="src\UrlLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ScanProgress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\Application.h">
@@ -42,9 +45,15 @@
     <QtMoc Include="src\UrlLoader.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\ScanProgress.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\Application.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="src\ScanProgress.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
