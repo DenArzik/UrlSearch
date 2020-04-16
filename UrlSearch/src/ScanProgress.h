@@ -3,6 +3,8 @@
 #include <QWidget>
 namespace Ui { class ScanProgress; };
 
+class UrlSearchStatusModel;
+
 class ScanProgress : public QWidget
 {
 	Q_OBJECT
@@ -13,4 +15,10 @@ public:
 
 private:
 	Ui::ScanProgress *ui;
+
+	void init();
+	void initTable();
+
+	UrlSearchStatusModel *model;
 };
+

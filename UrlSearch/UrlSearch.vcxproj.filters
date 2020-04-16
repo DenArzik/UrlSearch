@@ -37,6 +37,9 @@
     <ClCompile Include="src\ScanProgress.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\UrlSearchStatusModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\Application.h">
@@ -46,6 +49,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ScanProgress.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\UrlSearchStatusModel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
