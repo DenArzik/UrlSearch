@@ -94,7 +94,9 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\ScanProgress.cpp" />
+    <ClCompile Include="src\SearchProgress.cpp" />
+    <ClCompile Include="src\SearchManager.cpp" />
+    <ClCompile Include="src\SearchWorker.cpp" />
     <ClCompile Include="src\UrlLoader.cpp" />
     <ClCompile Include="src\UrlSearchStatusModel.cpp" />
   </ItemGroup>
@@ -103,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\Application.ui" />
-    <QtUic Include="src\ScanProgress.ui" />
+    <QtUic Include="src\SearchProgress.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Resources\Application.qrc" />
@@ -118,10 +120,16 @@
     <QtMoc Include="src\UrlLoader.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="src\ScanProgress.h" />
+    <QtMoc Include="src\SearchProgress.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\UrlSearchStatusModel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\SearchManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\SearchWorker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

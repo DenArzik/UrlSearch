@@ -2,12 +2,21 @@
 
 #include <QAbstractTableModel>
 
-static struct UrlSearchStatus
+class QMutex;
+
+struct UrlSearchStatus
 {
 	QString m_errorStr;
-	bool m_downloaded;
-	bool m_scanned;
-	bool m_textFound;
+
+	//scan flags
+	bool m_downloaded : 1;
+	bool m_scanned : 1;
+	bool m_textFound : 1;
+
+	//to check whether we allready picked url to search
+	//to avoid race conditions
+	//pick flag
+	bool m_picked : 1;
 };
 
 class UrlSearchStatusModel : public QAbstractTableModel
@@ -34,7 +43,10 @@ private:
 	static QString formatStatus(const UrlSearchStatus &itm);
 
 public:
+	const std::map<QString, UrlSearchStatus> getUrlMap() const;
+
 	void insertUrl(const QString &url);
+	void setUrlPicked(const QString &url);
 	void setUrlError(const QString &url, const QString &error);
 	void setUrlDownloaded(const QString &url, bool downloaded);
 	void setUrlScanned(const QString &url, bool scanned);
@@ -43,5 +55,8 @@ public:
 
 signals:
 	void dataUpdated();
+
+private:
+	QMutex *mutex;
 
 };

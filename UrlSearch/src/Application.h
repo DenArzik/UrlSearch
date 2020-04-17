@@ -23,5 +23,11 @@ private:
 private slots:
 	void go_pressed();
 
+public:
+	QString getUrl() const;
+	QString getSearchText() const;
+	int getThreadCount() const;
+	int getMaxUrlCount() const;
+
 
 };

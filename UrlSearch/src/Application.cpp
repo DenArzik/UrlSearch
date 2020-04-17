@@ -6,7 +6,7 @@
 #include <QUrl>
 #include <QDebug>
 
-#include "ScanProgress.h"
+#include "SearchProgress.h"
 
 Application::Application(QWidget *parent)
 	: QMainWindow(parent)
@@ -39,12 +39,32 @@ int Application::getMaxThreadCount() const
 	return QThreadPool::globalInstance()->maxThreadCount();
 }
 
+QString Application::getUrl() const
+{
+	return ui.l_url->text();
+}
+
+QString Application::getSearchText() const
+{
+	return ui.l_search_text->text();
+}
+
+int Application::getThreadCount() const
+{
+	return ui.sb_max_threads->value();
+}
+
+int Application::getMaxUrlCount() const
+{
+	return ui.sb_max_url_count->value();
+}
+
 
 void Application::go_pressed()
 {
 	this->setEnabled(false);
 
-	ScanProgress *scanProgress = new ScanProgress(nullptr);
+	SearchProgress *scanProgress = new SearchProgress(this, nullptr);
 	scanProgress->show();
-	connect(scanProgress, &ScanProgress::destroyed, this, [this]() { this->setEnabled(true); });
+	connect(scanProgress, &SearchProgress::destroyed, this, [this]() { this->setEnabled(true); });
 }

@@ -2,6 +2,8 @@
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+//wait for reply
+#include <QEventLoop>
 
 UrlLoader::UrlLoader(QObject *parent)
 	: QObject(parent)
@@ -15,25 +17,18 @@ UrlLoader::~UrlLoader()
 {
 }
 
-void UrlLoader::loadURL(const QUrl &url)
+QNetworkReply *UrlLoader::sendLoadRequest(const QUrl &url)
 {
-	manager->get(QNetworkRequest(url));
+	return manager->get(QNetworkRequest(url));
 }
 
-void UrlLoader::loadUrl(const QString &str)
+QNetworkReply *UrlLoader::sendLoadRequest(const QString &str)
 {
 	QUrl url(str);
-	loadURL(url);
+	return sendLoadRequest(url);
 }
 
 void UrlLoader::replyFinished(QNetworkReply *nr)
 {
-	if (nr->error() != QNetworkReply::NoError)
-	{
-		emit errorString(nr->errorString());
-		return;
-	}
-
-	QByteArray data = nr->readAll();
-	emit urlContent(data);
+	emit responce(nr);
 }

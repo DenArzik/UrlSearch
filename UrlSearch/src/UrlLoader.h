@@ -13,8 +13,8 @@ public:
 	UrlLoader(QObject *parent);
 	~UrlLoader();
 
-	void loadUrl(const QString &str);
-	void loadURL(const QUrl &url);
+	QNetworkReply *sendLoadRequest(const QString &str);
+	QNetworkReply *sendLoadRequest(const QUrl &url);
 
 private:
 	QNetworkAccessManager *manager;
@@ -23,7 +23,6 @@ private slots:
 	void replyFinished(QNetworkReply *nr);
 
 signals:
-	void errorString(const QString &str);
-	void urlContent(const QByteArray &str);
+	void responce(QNetworkReply *str);
 
 };

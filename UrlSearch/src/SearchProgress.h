@@ -23,7 +23,5 @@ private:
 	void initTable();
 
 	UrlSearchStatusModel *model;
-
-	void initScanManager();
 };
 

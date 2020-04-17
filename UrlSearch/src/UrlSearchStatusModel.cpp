@@ -1,9 +1,13 @@
 #include "UrlSearchStatusModel.h"
 
+#include <QMutex>
+
 UrlSearchStatusModel::UrlSearchStatusModel(QObject *parent)
 	: QAbstractTableModel(parent)
 {
 	url_map["pornhub.com"].m_errorStr = "Scanned and approved";
+
+	mutex = new QMutex;
 }
 
 
@@ -43,13 +47,24 @@ QString UrlSearchStatusModel::formatStatus(const UrlSearchStatus &itm)
 	return result;
 }
 
+const std::map<QString, UrlSearchStatus> UrlSearchStatusModel::getUrlMap() const
+{
+	return url_map;
+}
+
 void UrlSearchStatusModel::insertUrl(const QString &url)
 {
-	url_map[url];
+	url_map[url]; 
 	emit dataUpdated();
 }
 
-void UrlSearchStatusModel::setUrlError(const QString &url, const QString& error)
+void UrlSearchStatusModel::setUrlPicked(const QString& url)
+{
+	url_map[url].m_picked = true;
+	//data updated signal not required because this is not output variable
+}
+
+void UrlSearchStatusModel::setUrlError(const QString &url, const QString &error)
 {
 	url_map[url].m_errorStr = error;
 	emit dataUpdated();

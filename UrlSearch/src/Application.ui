@@ -60,7 +60,7 @@
         <item>
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Max threads</string>
+           <string>Threads</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

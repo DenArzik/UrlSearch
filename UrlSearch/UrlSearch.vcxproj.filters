@@ -34,10 +34,16 @@
     <ClCompile Include="src\UrlLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ScanProgress.cpp">
+    <ClCompile Include="src\UrlSearchStatusModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\UrlSearchStatusModel.cpp">
+    <ClCompile Include="src\SearchManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SearchWorker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SearchProgress.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,10 +54,16 @@
     <QtMoc Include="src\UrlLoader.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\ScanProgress.h">
+    <QtMoc Include="src\UrlSearchStatusModel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\UrlSearchStatusModel.h">
+    <QtMoc Include="src\SearchManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\SearchWorker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\SearchProgress.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -59,7 +71,7 @@
     <QtUic Include="src\Application.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="src\ScanProgress.ui">
+    <QtUic Include="src\SearchProgress.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
