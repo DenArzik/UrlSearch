@@ -5,7 +5,7 @@
 UrlSearchStatusModel::UrlSearchStatusModel(QObject *parent)
 	: QAbstractTableModel(parent)
 {
-	url_map["pornhub.com"].m_errorStr = "Scanned and approved";
+	//url_map["pornhub.com"].m_errorStr = "Scanned and approved";
 
 	mutex = new QMutex;
 }

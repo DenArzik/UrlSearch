@@ -3,6 +3,7 @@
 #include <QObject>
 
 class SearchManager;
+class QNetworkReply;
 
 class SearchWorker : public QObject
 {
@@ -22,10 +23,16 @@ signals:
 	void finished();
 
 private:
-	bool search(const QString &url);
+	void search(const QString &url, const QString &urlContent);
 
-	bool download(const QString &url);
+	QNetworkReply *download(const QString &url);
 
-	//bool scan();
+	struct ScanResult
+	{
+		bool textFound;
+		QStringList urlList;
+	};
+
+	ScanResult scan(const QString &arr);
 
 };

@@ -16,8 +16,7 @@ class SearchManager : public QObject
 	Q_OBJECT
 
 public:
-	SearchManager(const Application *mainWindow, UrlSearchStatusModel *urlModel, 
-		UrlLoader *urlLoader, QObject *parent);
+	SearchManager(const Application *mainWindow, UrlSearchStatusModel *urlModel, QObject *parent);
 	~SearchManager();
 
 private:
@@ -37,7 +36,7 @@ public:
 	//returning reference is acceptable untill there is deletion 
 	//possibility from model during serch
 	//need race protection
-	const QString &popUrl();
+	QString popUrl();
 
 	UrlSearchStatusModel *getUrlSearchStatusModel();
 
@@ -53,10 +52,21 @@ private slots:
 	void responceHandler(QNetworkReply *reply);
 
 public:
+	void removeNetworkReply(const SearchWorker *worker);
+
 	void sendDownloadRequest(const SearchWorker *worker, const QString &url);
 
 	std::optional<QNetworkReply *> tryGetResponce(const SearchWorker *worker);
 
 	QString getSearchText() const;
+
+private:
+	int workersIterationCount;
+
+public:
+	void incrementIterations();
+	bool jobFinished() const;
+
+
 
 };

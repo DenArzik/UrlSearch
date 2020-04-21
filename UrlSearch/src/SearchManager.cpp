@@ -9,18 +9,24 @@
 #include "UrlSearchStatusModel.h"
 #include "UrlLoader.h"
 
-SearchManager::SearchManager(const Application *mainWindow, UrlSearchStatusModel *urlModel, 
-	UrlLoader* urlLoader, QObject *parent)
+SearchManager::SearchManager(const Application *mainWindow, UrlSearchStatusModel *urlModel, QObject *parent)
 	: QObject(parent)
 	, m_mainWindow(mainWindow)
 	, m_urlModel(urlModel)
-	, m_urlLoader(urlLoader)
+	, m_urlLoader(new UrlLoader(this))
+	, workersIterationCount(0)
 {
 	init();
+
+	m_urlModel->insertUrl(m_mainWindow->getUrl());
 }
 
 SearchManager::~SearchManager()
 {
+	for (auto &itm : threadWorkerList)
+	{
+		itm.first->deleteLater();
+	}
 }
 
 void SearchManager::init()
@@ -39,12 +45,16 @@ void SearchManager::initThreads()
 	{
 		it.first = new QThread;
 		it.second = new SearchWorker(this, nullptr);
+		it.second->moveToThread(it.first);
+		connect(it.first, &QThread::finished, it.second, &QObject::deleteLater);
+		connect(it.first, &QThread::started, it.second, &SearchWorker::doWork);
+		it.first->start();
 
 		workerRequestMap[it.second] = nullptr;
 	}
 }
 
-const QString &SearchManager::popUrl()
+QString SearchManager::popUrl()
 {
 	QMutexLocker locker(&m_mutex);
 
@@ -60,9 +70,15 @@ const QString &SearchManager::popUrl()
 	return "";
 }
 
-UrlSearchStatusModel* SearchManager::getUrlSearchStatusModel()
+UrlSearchStatusModel *SearchManager::getUrlSearchStatusModel()
 {
 	return m_urlModel;
+}
+
+void SearchManager::removeNetworkReply(const SearchWorker *worker)
+{
+	replyArrivalMap.erase(workerRequestMap[worker]);
+	workerRequestMap[worker]->deleteLater();
 }
 
 void SearchManager::sendDownloadRequest(const SearchWorker *worker, const QString &url)
@@ -86,6 +102,17 @@ QString SearchManager::getSearchText() const
 {
 	return m_mainWindow->getSearchText();
 }
+
+void SearchManager::incrementIterations()
+{
+	++workersIterationCount;
+}
+
+bool SearchManager::jobFinished() const
+{
+	return m_mainWindow->getMaxUrlCount() < workersIterationCount;
+}
+
 
 void SearchManager::responceHandler(QNetworkReply *reply)
 {

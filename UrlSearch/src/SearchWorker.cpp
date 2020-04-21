@@ -26,36 +26,55 @@ SearchWorker::~SearchWorker()
 void SearchWorker::doWork()
 {
 
-	while (true)
+	while ( !s_mgr->jobFinished() )
 	{
-		const QString &url = s_mgr->popUrl();
-		search(url);
-		//clean up networkreply
+		const QString url = s_mgr->popUrl();
+
+		if (url == "")
+		{
+			s_mgr->incrementIterations();
+			return;
+		}
+
+		QNetworkReply *reply = download(url);
+		if (reply == nullptr)
+		{
+			continue;
+		}
+
+		search( url, QString( reply->readAll().data() ) );
+		
+		s_mgr->removeNetworkReply(this);
+
+		s_mgr->incrementIterations();
 	}
 
 	emit finished();
 }
 
-bool SearchWorker::search(const QString &url)
+void SearchWorker::search(const QString &url, const QString &urlContent)
 {
-	//divide into functions
-	download(url);
+	const ScanResult result = scan(urlContent);
 
-	s_mgr->getUrlSearchStatusModel()->setUrlDownloaded(url, true);
+	for (const QString &itm: result.urlList)
+	{
+		s_mgr->getUrlSearchStatusModel()->insertUrl(itm);
+	}
 
-	//scan();
-
-
-	return false;
+	//to avoid accessing mutex more than necessary
+	if (result.textFound == true)
+	{
+		s_mgr->getUrlSearchStatusModel()->setUrlTextFound(url, result.textFound);
+	}
 }
 
-bool SearchWorker::download(const QString &url)
+QNetworkReply *SearchWorker::download(const QString &url)
 {
 	s_mgr->sendDownloadRequest(this, url);
 
-	QNetworkReply* reply = nullptr;
+	QNetworkReply *reply = nullptr;
 	{
-		std::optional<QNetworkReply*> optReply;
+		std::optional<QNetworkReply *> optReply;
 		while (!(optReply = s_mgr->tryGetResponce(this)))
 		{
 			QThread::msleep(10);
@@ -66,8 +85,29 @@ bool SearchWorker::download(const QString &url)
 	if (reply->error() != QNetworkReply::NoError)
 	{
 		s_mgr->getUrlSearchStatusModel()->setUrlError(url, reply->errorString());
-		return false;
+		return nullptr;
 	}
 
-	return true;
+	s_mgr->getUrlSearchStatusModel()->setUrlDownloaded(url, true);
+	return reply;
+}
+
+SearchWorker::ScanResult SearchWorker::scan(const QString &urlContent)
+{
+	ScanResult result;
+	const QString searchText = s_mgr->getSearchText();
+
+	QRegExp textAndUrl( QString("(%1|HTTPS:\/\/.*\")").arg(searchText) );
+	textAndUrl.setCaseSensitivity(Qt::CaseInsensitive);
+	QRegExp justUrl("HTTPS:\/\/.*\")");
+	justUrl.setCaseSensitivity(Qt::CaseInsensitive);
+
+	int pos = 0;
+	while ((pos = textAndUrl.indexIn(urlContent, pos)) != -1) {
+		qDebug() << textAndUrl.cap(1);
+		pos += textAndUrl.matchedLength();
+	}
+
+
+	return {};
 }

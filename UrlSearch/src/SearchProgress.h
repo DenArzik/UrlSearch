@@ -5,6 +5,7 @@ namespace Ui { class ScanProgress; };
 
 class UrlSearchStatusModel;
 class Application;
+class SearchManager;
 
 class SearchProgress : public QWidget
 {
@@ -23,5 +24,7 @@ private:
 	void initTable();
 
 	UrlSearchStatusModel *model;
+
+	SearchManager *mgr;
 };
 

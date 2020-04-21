@@ -1,8 +1,9 @@
-#include "ScanProgress.h"
+#include "SearchProgress.h"
 #include "ui_ScanProgress.h"
 
 #include "UrlSearchStatusModel.h"
 #include "Application.h"
+#include "SearchManager.h"
 
 SearchProgress::SearchProgress(const Application *main_window, QWidget *parent)
 	: QWidget(parent)
@@ -24,6 +25,8 @@ void SearchProgress::init()
 	setAttribute(Qt::WA_DeleteOnClose);
 
 	initTable();
+
+	mgr = new SearchManager(m_mainWindow, model, this);
 }
 
 void SearchProgress::initTable()
