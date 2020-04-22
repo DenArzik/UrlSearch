@@ -7,9 +7,8 @@
 
 UrlLoader::UrlLoader(QObject *parent)
 	: QObject(parent)
+	, manager(new QNetworkAccessManager(this))
 {
-	manager = new QNetworkAccessManager(this);
-
 	connect(manager, &QNetworkAccessManager::finished, this, &UrlLoader::replyFinished);
 }
 
@@ -20,6 +19,12 @@ UrlLoader::~UrlLoader()
 QNetworkReply *UrlLoader::sendLoadRequest(const QUrl &url)
 {
 	return manager->get(QNetworkRequest(url));
+}
+
+UrlLoader *UrlLoader::get()
+{
+	static UrlLoader instance(nullptr);
+	return &instance;
 }
 
 QNetworkReply *UrlLoader::sendLoadRequest(const QString &str)

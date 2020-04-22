@@ -9,7 +9,6 @@ class UrlSearchStatusModel;
 class Application;
 class QThread;
 class QNetworkReply;
-class UrlLoader;
 
 class SearchManager : public QObject
 {
@@ -41,8 +40,6 @@ public:
 	UrlSearchStatusModel *getUrlSearchStatusModel();
 
 private:
-	UrlLoader *m_urlLoader;
-
 	//to identify responce with worker who sent it
 	std::map<const SearchWorker *const, QNetworkReply *> workerRequestMap;
 	//to check whether reply allready came from [urlLoader]
@@ -66,7 +63,5 @@ private:
 public:
 	void incrementIterations();
 	bool jobFinished() const;
-
-
 
 };

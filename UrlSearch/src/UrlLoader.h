@@ -9,9 +9,15 @@ class UrlLoader : public QObject
 {
 	Q_OBJECT
 
-public:
+private:
 	UrlLoader(QObject *parent);
 	~UrlLoader();
+
+	UrlLoader(const QObject &obj) = delete;
+	UrlLoader &operator=(const QObject &obj) = delete;
+
+public:
+	static UrlLoader *get();
 
 	QNetworkReply *sendLoadRequest(const QString &str);
 	QNetworkReply *sendLoadRequest(const QUrl &url);

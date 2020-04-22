@@ -13,7 +13,6 @@ SearchManager::SearchManager(const Application *mainWindow, UrlSearchStatusModel
 	: QObject(parent)
 	, m_mainWindow(mainWindow)
 	, m_urlModel(urlModel)
-	, m_urlLoader(new UrlLoader(this))
 	, workersIterationCount(0)
 {
 	init();
@@ -33,7 +32,7 @@ void SearchManager::init()
 {
 	initThreads();
 
-	connect(m_urlLoader, &UrlLoader::responce, this, &SearchManager::responceHandler);
+	connect(UrlLoader::get(), &UrlLoader::responce, this, &SearchManager::responceHandler);
 }
 
 void SearchManager::initThreads()
@@ -83,7 +82,7 @@ void SearchManager::removeNetworkReply(const SearchWorker *worker)
 
 void SearchManager::sendDownloadRequest(const SearchWorker *worker, const QString &url)
 {
-	QNetworkReply *reply = m_urlLoader->sendLoadRequest(url);
+	QNetworkReply *reply = UrlLoader::get()->sendLoadRequest(url);
 	workerRequestMap[worker] = reply;
 	replyArrivalMap[reply] = false;
 }
